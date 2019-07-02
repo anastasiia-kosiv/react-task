@@ -4,67 +4,6 @@ import Table from 'react-bootstrap/Table'
 // import logo from './logo.svg';
 // import './App.css';
 
-// var jsonData = require('./jsonData/MOCK_DATA.json');
-// var myObject = JSON.parse(jsonFile);
-//
-// function reqListener(e) {
-//     data = JSON.parse(this.responseText);
-//     console.log(data);
-// }
-
-// var data;
-//
-// var oReq = new XMLHttpRequest();
-// oReq.onload = reqListener;
-// oReq.open("get", "jsonData/MOCK_DATA.json", true);
-// oReq.send();
-//
-// function reqListener(e) {
-//     data = JSON.parse(this.responseText);
-//     console.log(data);
-// }
-// console.log(data);
-
-// function getAddress (id) {
-//  return this.http.get("data/address.json")
-//  .map(res => res.json());
-//  }
-
-// var data;
-//
-// function loadJSON(jsonfile, callback) {
-//
-//         var jsonObj = new XMLHttpRequest();
-//         jsonObj.overrideMimeType("application/json");
-//         jsonObj.open('GET', "./jsonData/MOCK_DATA.json", true);
-//         jsonObj.onreadystatechange = function () {
-//               if (jsonObj.readyState == 4 && jsonObj.status == "200") {
-//                 callback(jsonObj.responseText);
-//               }
-//         };
-//         jsonObj.send(null);
-//      }
-//
-//     function load() {
-//
-//         loadJSON(jsonData, function(response) {
-//             data = JSON.parse(response);
-//             console.log(data);
-//         });
-//     }
-
-    // load();
-
-    // constructor (props) {
-    //    this.state = {
-    //          items: [],
-    //    }
-    //    axios.get('http://localhost:3000/my-app/src/jsonData/MOCK_DATA.json')
-    //     .then(res => {
-    //         this.setState({ items: res.data });
-    //    });
-    // }
-
 class TableCustom extends Component{
 // function TableCustom() {
   // console.log(jsonFile);
@@ -74,12 +13,13 @@ class TableCustom extends Component{
     this.state = {
       data:[]
     }
+
+    this.handleDeleteRow = this.handleDeleteRow.bind(this);
+
   }
 
   componentDidMount() {
-      //here my function that store the response from my api
-      // GetData('./jsonData/MOCK_DATA.json',
-          // this.setState({data: JSON.parse('./jsonData/MOCK_DATA.json')});
+
           fetch('./MOCK_DATA.json', {
             headers : {
               'Content-Type': 'application/json',
@@ -96,17 +36,17 @@ class TableCustom extends Component{
 
   }
 
-  // {this.state.data.map((x, i) => <td key={i}>x.first_name</td>)}
-  // {this.state.data.map((x, i) => <td key={i}>x.last_name</td>)}
-  // {this.state.data.map((x, i) => <td key={i}>x.email</td>)}
-  // {this.state.data.map((x, i) => <td key={i}>x.gender</td>)}
-  // {this.state.data.map((x, i) => <td key={i}>x.ip_address</td>)}
-  // {this.state.data.map((x, i) => <td key={i}>x.country</td>)}
-  // {this.state.data.map((x, i) => <td key={i}>x.last_activity</td>)}
-  // {this.state.data.map((x, i) => <td key={i}>x.frequency</td>)}
-  // <td>{this.state.first_name}</td>
-  // <td>{this.state.last_name}</td>
-  //
+
+
+    handleDeleteRow(i) {
+      let rows = [...this.state.data]
+          rows.splice(i, 1);
+          this.setState({
+            data: rows
+      })
+    }
+
+
 
   render() {
   return (
@@ -133,6 +73,7 @@ class TableCustom extends Component{
             <td>{x.country}</td>
             <td>{x.last_activity}</td>
             <td>{x.frequency}</td>
+            <td><a onClick={i => this.handleDeleteRow(x.id)}>Delete Row</a></td>
           </tr>)}
 
       </tbody>
