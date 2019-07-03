@@ -1,0 +1,11 @@
+.menu{
+  padding-left: 5px;
+  padding-right: 5px;
+  font-size: 1.2em;
+  visibility: hidden;
+  cursor: pointer;
+}
+
+.last-cell-style:hover .menu{
+  visibility: visible;
+}

@@ -1,20 +1,17 @@
 import React, {Component} from 'react';
 import Table from 'react-bootstrap/Table'
+import FaTrash from 'react-icons/lib/fa/trash';
+import FaEdit from 'react-icons/lib/fa/edit';
 // import axios from 'axios';
 // import logo from './logo.svg';
-// import './App.css';
+import './TableCustom.css';
 
 class TableCustom extends Component{
-// function TableCustom() {
-  // console.log(jsonFile);
-  // load();
   constructor(props){
     super(props);
     this.state = {
       data:[]
     }
-
-    this.handleDeleteRow = this.handleDeleteRow.bind(this);
 
   }
 
@@ -36,19 +33,22 @@ class TableCustom extends Component{
 
   }
 
-
-
-    handleDeleteRow(i) {
-      let rows = [...this.state.data]
-          rows.splice(i, 1);
-          this.setState({
-            data: rows
-      })
-    }
-
-
+  deleteRow(index) {
+      var data = [...this.state.data];
+      // console.log(data.splice(index, 1));
+      data.splice(index, 1);
+      this.setState({data});
+  }
 
   render() {
+
+    let lastCell = 'last-cell-style';
+    let iconStyles = 'menu';
+      // if (this.props.mouseOver) {
+      //   iconStyles += ' menu-active';
+      // }
+
+
   return (
     <Table responsive striped bordered hover variant="dark">
       <thead>
@@ -61,10 +61,11 @@ class TableCustom extends Component{
           <th>Country</th>
           <th>Last activity</th>
           <th>Frequency</th>
+          <th> - </th>
         </tr>
       </thead>
       <tbody>
-        {this.state.data.map((x, i) => <tr key={i}>
+        {this.state.data.map((x, i) => <tr className={lastCell} key={i}>
             <td>{x.first_name}</td>
             <td>{x.last_name}</td>
             <td>{x.email}</td>
@@ -73,7 +74,10 @@ class TableCustom extends Component{
             <td>{x.country}</td>
             <td>{x.last_activity}</td>
             <td>{x.frequency}</td>
-            <td><a onClick={i => this.handleDeleteRow(x.id)}>Delete Row</a></td>
+            <td>
+              <a className={iconStyles} onClick ={index => this.deleteRow(i)}><FaTrash /></a>
+              <a className={iconStyles}><FaEdit /></a>
+            </td>
           </tr>)}
 
       </tbody>
