@@ -9,3 +9,7 @@
 .last-cell-style:hover .menu{
   visibility: visible;
 }
+
+.tableSelected{
+  background-color: #d09237a8 !important;
+}
