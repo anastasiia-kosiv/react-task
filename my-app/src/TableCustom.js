@@ -19,15 +19,15 @@ class TableCustom extends Component{
   }
 
   toggleRow(id) {
-      const newSelected = this.state.selected;
+      const newSelected = [...this.state.selected];
 
-        var arrEl = this.state.selected.indexOf(id);
+        var arrEl = newSelected.indexOf(id);
         if(arrEl == -1){
-          this.state.selected.push(id);
-          console.log(this.state.selected);
+          newSelected.push(id);
+          console.log(newSelected);
         }else{
-          this.state.selected.splice(arrEl, 1);
-          console.log(this.state.selected);
+          newSelected.splice(arrEl, 1);
+          console.log(newSelected);
         }
 
       this.setState({
@@ -53,22 +53,48 @@ class TableCustom extends Component{
     // }
 
 
+    checkSelectedArr(){
+      const emptyArr = [];
+
+      console.log(132);
+
+      if((this.state.selected.length-1) != 250 ){
+        this.setState({
+          selected: emptyArr
+        });
+      }
+    }
 
     toggleSelectAll() {
-      const newSelected = this.state.selected;
+      this.checkSelectedArr()
+      const newSelected = [...this.state.selected];
+      const emptyArr = [];
       var n = this.state.data.length;
 
-      for (var i = 0; i <= this.state.data.length; i++) {
-        this.state.selected.push(n);
-        n = n -1;
-      }
-      console.log(this.state.selected.length);
-      console.log(this.state.data.length);
 
-      this.setState({
-        selected: newSelected
-      });
+      if(this.state.data.length == (this.state.selected.length - 1)){
+        this.setState({
+          selected: emptyArr
+        });
+
+        console.log(this.state.selected.length);
+        console.log(this.state.data.length);
+      } else {
+        for (var i = 0; i <= this.state.data.length; i++) {
+          newSelected.push(n);
+          n = n -1;
+        }
+        console.log(newSelected.length);
+        console.log(this.state.data.length);
+
+        this.setState({
+          selected: newSelected
+        });
+      }
+
+
     }
+
 
   componentDidMount() {
 
@@ -100,26 +126,39 @@ class TableCustom extends Component{
 
   deleteRowsSelected() {
       var data = [...this.state.data];
-
+      var newSelected = [...this.state.selected];
       const emptySelected = [];
 
-      // console.log(this.state.selected);
+      console.log(this.state.selected);
 
-      this.state.selected.sort(function(a,b){
+      // data = data.filter(function(item) {
+      //   console.log(!newSelected.includes(item) ? true : newSelected.splice(newSelected.indexOf(item),1) && false);
+      //   return !newSelected.includes(item) ? true : newSelected.splice(newSelected.indexOf(item),1) && false;
+      // });
+
+      // data = data.filter( ( el ) => !newSelected.includes( el ) );
+
+      // data = data.filter( function( el ) {
+      //   console.log(newSelected.includes( el ));
+      //   return newSelected.includes( el );
+      // } );
+
+      newSelected.sort(function(a,b){
        return (b - a)
       });
 
 
 
         var c;
-        for(var j = 0; j < this.state.selected.length; j++ ){
-          c = this.state.selected[j];
+        for(var j = 0; j < newSelected.length; j++ ){
+          c = newSelected[j];
           // console.log((data.splice(c, 1)))
           data.splice(c, 1)
 
-      }
+        }
 
-      this.state.selected.splice(1, this.state.selected.length);
+
+      newSelected.splice(1, newSelected.length);
 
       this.setState({
         data,
@@ -127,6 +166,8 @@ class TableCustom extends Component{
       });
 
   }
+
+
 
   render() {
 
@@ -147,7 +188,7 @@ class TableCustom extends Component{
                 type="checkbox"
                 className="checkbox"
                 checked={this.state.selected.length === this.state.data.length}
-                
+
                 onChange={() => this.toggleSelectAll()}
               />
            <span className="checkmark"></span>
