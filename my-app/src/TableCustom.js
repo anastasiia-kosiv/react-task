@@ -56,10 +56,9 @@ class TableCustom extends Component{
     toggleSelectAll() {
       const newSelected = [...this.state.selected];
       const emptyArr = [];
-      var n = this.state.data.length;
+      // console.log(this.state.selected.length);
 
-
-      if((this.state.data.length == (this.state.selected.length - 1)) || (this.state.selected.length > 0)){
+      if((this.state.data.length == this.state.selected.length) || (this.state.selected.length > 0)){
         this.setState({
           selected: emptyArr
         });
@@ -67,9 +66,8 @@ class TableCustom extends Component{
         // console.log(this.state.selected.length);
         // console.log(this.state.data.length);
       } else {
-        for (var i = 0; i <= this.state.data.length; i++) {
-          newSelected.push(n);
-          n = n -1;
+        for (var i = 0; i < this.state.data.length; i++) {
+          newSelected.push(i);
         }
         // console.log(newSelected.length);
         // console.log(this.state.data.length);
@@ -78,7 +76,6 @@ class TableCustom extends Component{
           selected: newSelected
         });
       }
-
 
     }
 
