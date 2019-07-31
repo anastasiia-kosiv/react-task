@@ -56,27 +56,39 @@ class TableCustom extends Component{
     toggleSelectAll() {
       const newSelected = [...this.state.selected];
       const emptyArr = [];
-      // console.log(this.state.selected.length);
 
-      if((this.state.data.length == this.state.selected.length) || (this.state.selected.length > 0)){
+      if(this.state.data.length == this.state.selected.length){
+
         this.setState({
           selected: emptyArr
         });
 
-        // console.log(this.state.selected.length);
-        // console.log(this.state.data.length);
       } else {
-        for (var i = 0; i < this.state.data.length; i++) {
-          newSelected.push(i);
+
+        if((this.state.selected.length > 0) && (this.state.data.length !== this.state.selected.length)){
+
+          newSelected.splice(0, this.state.selected.length);
+
+          for (var i = 0; i < this.state.data.length; i++) {
+            newSelected.push(i);
+          }
+
+          this.setState({
+            selected: newSelected
+          });
+
+        } else {
+
+          for (var i = 0; i < this.state.data.length; i++) {
+            newSelected.push(i);
+          }
+
+          this.setState({
+            selected: newSelected
+          });
+
         }
-        // console.log(newSelected.length);
-        // console.log(this.state.data.length);
-
-        this.setState({
-          selected: newSelected
-        });
       }
-
     }
 
 
@@ -176,7 +188,7 @@ class TableCustom extends Component{
           <input
                 type="checkbox"
                 className="checkbox"
-                checked={this.state.selected.length === this.state.data.length}
+                checked={(this.state.selected.length === this.state.data.length) && (this.state.selected != 0)}
 
                 onChange={() => this.toggleSelectAll()}
               />
