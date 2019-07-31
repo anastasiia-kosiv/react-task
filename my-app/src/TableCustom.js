@@ -53,39 +53,26 @@ class TableCustom extends Component{
     // }
 
 
-    checkSelectedArr(){
-      const emptyArr = [];
-
-      console.log(132);
-
-      if((this.state.selected.length-1) != 250 ){
-        this.setState({
-          selected: emptyArr
-        });
-      }
-    }
-
     toggleSelectAll() {
-      this.checkSelectedArr()
       const newSelected = [...this.state.selected];
       const emptyArr = [];
       var n = this.state.data.length;
 
 
-      if(this.state.data.length == (this.state.selected.length - 1)){
+      if((this.state.data.length == (this.state.selected.length - 1)) || (this.state.selected.length > 0)){
         this.setState({
           selected: emptyArr
         });
 
-        console.log(this.state.selected.length);
-        console.log(this.state.data.length);
+        // console.log(this.state.selected.length);
+        // console.log(this.state.data.length);
       } else {
         for (var i = 0; i <= this.state.data.length; i++) {
           newSelected.push(n);
           n = n -1;
         }
-        console.log(newSelected.length);
-        console.log(this.state.data.length);
+        // console.log(newSelected.length);
+        // console.log(this.state.data.length);
 
         this.setState({
           selected: newSelected
@@ -129,36 +116,41 @@ class TableCustom extends Component{
       var newSelected = [...this.state.selected];
       const emptySelected = [];
 
-      console.log(this.state.selected);
+
+
+      // console.log(this.state.selected);
 
       // data = data.filter(function(item) {
       //   console.log(!newSelected.includes(item) ? true : newSelected.splice(newSelected.indexOf(item),1) && false);
       //   return !newSelected.includes(item) ? true : newSelected.splice(newSelected.indexOf(item),1) && false;
       // });
 
-      // data = data.filter( ( el ) => !newSelected.includes( el ) );
+      data = data.filter( ( el, index ) => !newSelected.includes( index ) );
+      // console.log(data);
+      // data = data.filter(function(el){
+            // console.log(newSelected.indexOf(el) !== -1);
+        //     return newSelected.indexOf(el) !== -1;
+        //
+        // });
+       // console.log(data.indexOf(el)));
+        // console.log(newSelected.includes( el ));
 
-      // data = data.filter( function( el ) {
-      //   console.log(newSelected.includes( el ));
-      //   return newSelected.includes( el );
-      // } );
-
-      newSelected.sort(function(a,b){
-       return (b - a)
-      });
-
-
-
-        var c;
-        for(var j = 0; j < newSelected.length; j++ ){
-          c = newSelected[j];
-          // console.log((data.splice(c, 1)))
-          data.splice(c, 1)
-
-        }
-
-
-      newSelected.splice(1, newSelected.length);
+      // newSelected.sort(function(a,b){
+      //  return (b - a)
+      // });
+      //
+      //
+      //
+      //   var c;
+      //   for(var j = 0; j < newSelected.length; j++ ){
+      //     c = newSelected[j];
+      //     // console.log((data.splice(c, 1)))
+      //     data.splice(c, 1)
+      //
+      //   }
+      //
+      //
+      // newSelected.splice(1, newSelected.length);
 
       this.setState({
         data,
